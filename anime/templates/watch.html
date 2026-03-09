@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="watch-layout">
+
+<!-- VIDEO PLAYER -->
+<div class="player-container">
+
+<iframe
+src="{{ embed_url }}"
+allowfullscreen
+frameborder="0">
+</iframe>
+
+</div>
+
+
+<!-- EPISODE SIDEBAR -->
+
+<div class="episode-sidebar">
+
+{% if anime.format == "MOVIE" %}
+
+<h3>Movie</h3>
+
+<div class="episode-item active">
+Movie
+</div>
+
+{% else %}
+
+<h3>Episodes</h3>
+
+<div class="episode-grid">
+
+{% for ep in ""|center:total_episodes %}
+{% with forloop.counter as ep_num %}
+
+<a href="{% url 'watch' mal_id ep_num %}?imdb={{imdb}}">
+
+<div class="episode-item {% if ep_num == episode %}active{% endif %}">
+{{ep_num}}
+</div>
+
+</a>
+
+{% endwith %}
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+
+<div class="player-controls">
+
+{% if episode > 1 %}
+<a href="{% url 'watch' mal_id episode|add:-1 %}?imdb={{imdb}}">
+<button class="nav-btn">Previous Episode</button>
+</a>
+{% endif %}
+
+{% if episode < total_episodes %}
+<a href="{% url 'watch' mal_id episode|add:1 %}?imdb={{imdb}}">
+<button class="nav-btn">Next Episode</button>
+</a>
+{% endif %}
+
+</div>
+
+{% endblock %}

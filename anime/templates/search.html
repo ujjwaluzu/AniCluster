@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h2 style="padding:20px">Search: {{query}}</h2>
+
+<div class="grid">
+
+{% for anime in results %}
+
+<a href="/anime/{{anime.mal_id}}">
+
+<div class="card">
+
+<img src="{{anime.images.jpg.image_url}}">
+
+<p>{{anime.title}}</p>
+
+</div>
+
+</a>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

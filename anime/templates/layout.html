@@ -1,0 +1,511 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>AniStream</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+background:#0f172a;
+color:white;
+
+background-image:url("https://4kwallpapers.com/images/walls/thumbs_3t/25243.jpg");
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+}
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#242428;;
+z-index:-1;
+}
+/* NAVBAR */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 50px;
+
+
+backdrop-filter:blur(12px);
+
+border-bottom:1px solid rgba(255,255,255,0.08);
+
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+/* LOGO */
+
+.logo a{
+font-size:28px;
+font-family:'Bangers', cursive;
+letter-spacing:2px;
+text-decoration:none;
+
+background:linear-gradient(white,#f472b6);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* SEARCH */
+
+.search{
+position:relative;
+}
+
+.search form{
+display:flex;
+align-items:center;
+}
+
+.search input{
+padding:12px 16px;
+border-radius:999px;
+border:1px solid rgba(255,255,255,0.08);
+
+background:#020617;
+color:white;
+
+outline:none;
+width:260px;
+
+transition:0.3s;
+}
+
+.search input::placeholder{
+color:#94a3b8;
+}
+
+.search input:focus{
+width:320px;
+border-color:#ec4899;
+box-shadow:0 0 15px rgba(236,72,153,0.4);
+}
+
+/* BUTTON */
+
+.search button{
+margin-left:-45px;
+
+border:none;
+background:transparent;
+color:#ec4899;
+
+font-size:16px;
+cursor:pointer;
+}
+.section-title{
+font-size:22px;
+margin:40px 0 20px 5px;
+font-weight:600;
+color:white;
+}
+/* BUTTON */
+
+.search button{
+padding:10px 16px;
+border:none;
+border-radius:8px;
+
+background:linear-gradient(45deg,#ec4899,#db2777);
+
+color:white;
+font-weight:600;
+cursor:pointer;
+
+transition:0.25s;
+}
+
+.search button:hover{
+transform:translateY(-2px);
+box-shadow:0 1px 2px rgba(236,72,153,0.45);
+}
+
+/* MAIN CONTENT */
+
+.main{
+padding:30px;
+}
+
+/* HOME GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:25px;
+}
+
+/* ANIME CARD */
+
+.card{
+background:#020617;
+border-radius:10px;
+overflow:hidden;
+transition:0.25s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+}
+
+.card img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+
+.card p{
+padding:10px;
+font-size:14px;
+}
+
+/* WATCH PAGE */
+.watch-layout{
+display:flex;
+gap:25px;
+padding:30px;
+max-width:1400px;
+margin:auto;
+height:calc(100vh - 90px);
+}
+
+/* BIG VIDEO PLAYER */
+
+.player-container{
+flex:4;
+background:black;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+
+.player-container iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+/* EPISODE SIDEBAR */
+
+.episode-sidebar{
+flex:1;
+background:#020617;
+border-radius:12px;
+padding:18px;
+overflow-y:auto;
+box-shadow:0 6px 20px rgba(0,0,0,0.4);
+}
+
+.episode-sidebar h3{
+margin-top:0;
+margin-bottom:12px;
+font-size:18px;
+}
+
+/* EPISODE ITEMS */
+
+.episode-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:8px;
+}
+
+.episode-item{
+padding:10px;
+background:#0f172a;
+border-radius:6px;
+text-align:center;
+cursor:pointer;
+font-size:14px;
+}
+
+.episode-item:hover{
+background:#1e293b;
+}
+
+.active{
+background:#ef4444;
+}
+
+.player-controls{
+margin-top:12px;
+display:flex;
+justify-content:space-between;
+}
+
+.nav-btn{
+padding:10px 16px;
+border:none;
+border-radius:8px;
+background:#ef4444;
+color:white;
+cursor:pointer;
+font-size:14px;
+}
+
+.nav-btn:hover{
+background:#dc2626;
+}
+
+.season-list{
+margin-top:20px;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.season-btn{
+padding:10px 16px;
+background:#020617;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.season-btn:hover{
+background:#1e293b;
+}
+
+.hero{
+position:relative;
+height:420px;
+border-radius:12px;
+overflow:hidden;
+margin-bottom:30px;
+}
+
+.hero img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(40%);
+}
+
+.hero-text{
+position:absolute;
+top:50%;
+left:50px;
+transform:translateY(-50%);
+}
+
+.hero-text h1{
+font-size:42px;
+margin-bottom:15px;
+}
+
+.hero-text button{
+padding:12px 20px;
+background:#ef4444;
+border:none;
+border-radius:6px;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+.hero-text button:hover{
+background:#dc2626;
+}
+
+.hero-slider{
+position:relative;
+height:420px;
+overflow:hidden;
+border-radius:12px;
+margin-bottom:30px;
+}
+
+.hero-slide{
+position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+transition:opacity 0.6s;
+}
+
+.hero-slide.active{
+opacity:1;
+}
+
+.hero-slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(40%);
+}
+
+.hero-text{
+position:absolute;
+top:50%;
+left:50px;
+transform:translateY(-50%);
+}
+
+.hero-text h1{
+font-size:42px;
+margin-bottom:15px;
+}
+
+
+.hero-slide::after{
+content:"";
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:60%;
+background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.hero-dots{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:10px;
+}
+
+.hero-dot{
+width:10px;
+height:10px;
+background:#888;
+border-radius:50%;
+cursor:default;
+}
+
+.hero-dot.active{
+background:white;
+}
+
+
+
+
+
+
+.slider-wrapper{
+position:relative;
+margin-bottom:40px;
+}
+
+.slider{
+display:flex;
+gap:25px;
+overflow:hidden;
+scroll-behavior:smooth;
+}
+
+.slider a{
+min-width:180px;
+}
+
+.slide-btn{
+position:absolute;
+top:40%;
+transform:translateY(-50%);
+background:#242428;
+border:none;
+color:white;
+font-size:22px;
+cursor:pointer;
+padding:10px 14px;
+border-radius:6px;
+z-index:10;
+box-shadow: #020617;
+}
+
+.slide-btn.left{
+left:-10px;
+}
+
+.slide-btn.right{
+right:-10px;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+<div class="logo">
+
+<a href="/">AniStream</a>
+</div>
+
+<div class="search">
+<form method="GET" action="/home">
+<input type="text" name="q" placeholder="Search anime">
+<button type="submit">Search</button>
+</form>
+</div>
+
+</div>
+
+
+<div class="main">
+
+{% block body %}
+{% endblock %}
+
+</div>
+<footer>
+    <p>Powered by rashan gang</p>
+</footer>
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+let slides = document.querySelectorAll(".hero-slide");
+
+if(slides.length === 0) return;
+
+let index = 0;
+
+setInterval(function(){
+
+slides[index].classList.remove("active");
+
+index++;
+
+if(index >= slides.length){
+index = 0;
+}
+
+slides[index].classList.add("active");
+
+}, 5000);
+
+});
+function slideLeft(){
+document.getElementById("popular-slider")
+.scrollBy({left:-400, behavior:"smooth"});
+}
+
+function slideRight(){
+document.getElementById("popular-slider")
+.scrollBy({left:400, behavior:"smooth"});
+}
+</script>
+</body>
+</html>

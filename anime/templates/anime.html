@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>{{anime.title.romaji}}</h1>
+
+<img src="{{anime.coverImage.large}}" width="250">
+
+<p>{{anime.description|safe}}</p>
+
+
+<a href="/watch/{{anime.idMal}}/1?imdb={{imdb}}">
+<button>Watch Anime</button>
+</a>
+
+
+{% if seasons %}
+
+<h2>Seasons</h2>
+
+<div class="season-list">
+
+{% for season in seasons %}
+
+<a href="/anime/{{season.idMal}}">
+
+<button class="season-btn">
+{{season.title.english|default:season.title.romaji}}
+</button>
+
+</a>
+
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+{% endblock %}
