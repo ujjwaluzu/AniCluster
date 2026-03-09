@@ -165,6 +165,97 @@ p{
 a{
     text-decoration: none;
 }
+
+
+
+@media (max-width:900px){
+
+.hero-slider{
+height:320px;
+}
+
+.hero-text{
+left:30px;
+}
+
+.hero-text h1{
+font-size:28px;
+}
+
+.watch-btn{
+padding:10px 18px;
+font-size:14px;
+}
+
+.card img{
+height:220px;
+}
+
+.slider a{
+min-width:150px;
+}
+
+p{
+font-size:13px;
+}
+
+}
+
+@media (max-width:600px){
+
+.hero-slider{
+height:240px;
+}
+
+.hero-text{
+left:20px;
+}
+
+.hero-text h1{
+font-size:20px;
+}
+
+.watch-btn{
+padding:8px 14px;
+font-size:13px;
+}
+
+.slider-wrapper{
+margin-bottom:25px;
+}
+
+.slider{
+gap:14px;
+overflow-x:auto;
+scrollbar-width:none;
+}
+
+.slider::-webkit-scrollbar{
+display:none;
+}
+
+.slider a{
+min-width:120px;
+}
+
+.card img{
+height:180px;
+}
+
+.slide-btn{
+display:none;
+}
+
+p{
+font-size:12px;
+text-align:center;
+margin-top:6px;
+}
+
+}
+
+
+
 </style>
 {% if featured %}
 
@@ -262,30 +353,6 @@ a{
 
 
 
-<!-- TOP AIRING -->
-
-<!-- <h2 class="section-title">Top Airing Anime</h2>
-
-<div class="grid">
-
-{% for anime in airing %}
-
-<a href="/anime/{{ anime.idMal }}">
-
-<div class="card">
-
-<img src="{{ anime.coverImage.large }}">
-
-
-
-</div>
-
-</a>
-
-
-{% endfor %}
-
-</div> -->
 
 
 

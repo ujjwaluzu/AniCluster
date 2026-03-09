@@ -4,7 +4,7 @@
 
 <head>
 <title>AniStream</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 
 *{
@@ -407,9 +407,14 @@ margin-bottom:40px;
 
 .slider{
 display:flex;
-gap:25px;
-overflow:hidden;
+gap:20px;
+overflow-x:auto;
 scroll-behavior:smooth;
+scrollbar-width:none;
+}
+
+.slider::-webkit-scrollbar{
+display:none;
 }
 
 .slider a{
@@ -440,6 +445,149 @@ right:-10px;
 }
 
 
+
+/* TABLET */
+
+@media (max-width: 900px){
+
+.navbar{
+padding:16px 25px;
+}
+
+.logo a{
+font-size:24px;
+}
+
+.search input{
+width:200px;
+}
+
+.search input:focus{
+width:230px;
+}
+
+.hero-text h1{
+font-size:32px;
+}
+
+.grid{
+grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+gap:18px;
+}
+
+.card img{
+height:220px;
+}
+
+.watch-layout{
+flex-direction:column;
+height:auto;
+}
+
+.player-container{
+width:100%;
+height:55vh;
+}
+
+.episode-sidebar{
+width:100%;
+max-height:300px;
+}
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px){
+
+.navbar{
+flex-direction:column;
+gap:10px;
+padding:14px 16px;
+}
+
+.logo a{
+font-size:22px;
+}
+
+.search form{
+width:100%;
+}
+
+.search input{
+width:100%;
+}
+
+.search input:focus{
+width:100%;
+}
+
+.main{
+padding:15px;
+}
+
+.section-title{
+font-size:18px;
+margin:25px 0 15px 0;
+}
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+}
+
+.card img{
+height:200px;
+}
+
+.hero-slider{
+height:260px;
+}
+
+.hero-text{
+left:20px;
+}
+
+.hero-text h1{
+font-size:24px;
+}
+
+.watch-layout{
+padding:10px;
+}
+
+.player-container{
+height:40vh;
+}
+
+.episode-grid{
+grid-template-columns:repeat(5,1fr);
+}
+
+.slide-btn{
+display:none;
+}
+
+}
+
+/* SMALL PHONES */
+
+@media (max-width: 400px){
+
+.grid{
+grid-template-columns:1fr 1fr;
+}
+
+.hero-text h1{
+font-size:20px;
+}
+
+.card img{
+height:180px;
+}
+
+}
 </style>
 
 </head>
@@ -450,13 +598,13 @@ right:-10px;
 
 <div class="logo">
 
-<a href="/home">AniStream</a>
+<a style="font-weight: 700;" href="/home">AniStream</a>
 </div>
 
 <div class="search">
 <form method="GET" action="/search">
-<input type="text" name="q" placeholder="Search anime">
-<button type="submit">Search</button>
+<input style="font-family: 'banger', cursive;" type="text" name="q" placeholder="Search anime">
+<button style="font-family: 'banger', cursive;" type="submit">Search</button>
 </form>
 </div>
 

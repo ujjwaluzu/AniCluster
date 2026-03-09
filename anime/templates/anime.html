@@ -1,19 +1,146 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1>{{anime.title.romaji}}</h1>
 
-<img src="{{anime.coverImage.large}}" width="250">
+<style>
+
+/* WRAPPER */
+
+.anime-container{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
+}
+
+/* TOP SECTION */
+
+.anime-header{
+display:flex;
+gap:40px;
+align-items:flex-start;
+}
+
+/* POSTER */
+
+.anime-poster img{
+width:230px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* INFO */
+
+.anime-info{
+flex:1;
+}
+
+.anime-info h1{
+font-size:34px;
+margin-bottom:15px;
+}
+
+.anime-info p{
+line-height:1.7;
+color:#cbd5f5;
+}
+
+/* WATCH BUTTON */
+
+.watch-btn{
+display:inline-block;
+margin-top:20px;
+padding:12px 24px;
+
+background:linear-gradient(45deg,#ec4899,#db2777);
+
+border-radius:8px;
+color:white;
+text-decoration:none;
+font-weight:600;
+
+transition:0.25s;
+}
+
+.watch-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 20px rgba(236,72,153,0.6);
+}
+
+/* SEASONS */
+
+.season-section{
+margin-top:50px;
+}
+
+.season-list{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.season-btn{
+padding:10px 18px;
+background:#020617;
+border:none;
+border-radius:8px;
+color:white;
+cursor:pointer;
+transition:0.25s;
+}
+
+.season-btn:hover{
+background:#ec4899;
+}
+
+/* MOBILE */
+
+@media (max-width:800px){
+
+.anime-header{
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.anime-poster img{
+width:180px;
+}
+
+.anime-info h1{
+font-size:26px;
+}
+
+}
+
+</style>
+
+
+<div class="anime-container">
+
+<div class="anime-header">
+
+<div class="anime-poster">
+<img src="{{anime.coverImage.large}}">
+</div>
+
+<div class="anime-info">
+
+<h1>{{anime.title.english|default:anime.title.romaji}}</h1>
 
 <p>{{anime.description|safe}}</p>
 
-
-<a href="/watch/{{anime.idMal}}/1?imdb={{imdb}}">
-<button>Watch Anime</button>
+<a class="watch-btn" href="/watch/{{anime.idMal}}/1?imdb={{imdb}}">
+▶ Watch Anime
 </a>
+
+</div>
+
+</div>
 
 
 {% if seasons %}
+
+<div class="season-section">
 
 <h2>Seasons</h2>
 
@@ -33,6 +160,10 @@
 
 </div>
 
+</div>
+
 {% endif %}
+
+</div>
 
 {% endblock %}

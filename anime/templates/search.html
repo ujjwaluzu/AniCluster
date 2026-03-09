@@ -158,6 +158,63 @@ p{
 a{
     text-decoration: none;
 }
+
+
+@media (max-width:900px){
+
+.grid{
+grid-template-columns:repeat(3,1fr) !important;
+gap:18px;
+}
+
+.card img{
+height:220px;
+}
+
+}
+
+@media (max-width:600px){
+
+.grid{
+grid-template-columns:repeat(2,1fr) !important;
+gap:14px;
+}
+
+.card img{
+height:190px;
+}
+
+}
+
+@media (max-width:420px){
+
+.grid{
+grid-template-columns:repeat(2,1fr) !important;
+gap:10px;
+}
+
+.card img{
+height:170px;
+}
+
+}
+
+@media (max-width:420px){
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+
+.card img{
+height:170px;
+}
+
+p{
+font-size:11px;
+}
+
+}
 </style>
 <h2 style="margin-bottom:30px">Search results for "{{query}}"</h2>
 
