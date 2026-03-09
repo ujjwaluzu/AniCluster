@@ -1,48 +1,15 @@
 import requests
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+TMDB_KEY = os.getenv("TMDB_KEY")
 
 
-TMDB_KEY = "4d04b1722277e2f2e0119b4c6cdaa1d6"
 ANILIST_API = "https://graphql.anilist.co"
-def search_consumet(title):
 
-    url = f"https://api.consumet.org/anime/animekai/{title}"
-
-    try:
-        response = requests.get(url)
-        data = response.json()
-
-        if data.get("results"):
-            return data["results"][0]["id"]
-
-    except:
-        return None
-
-    return None
-
-
-def get_consumet_stream(episode_id, dub=False):
-
-    url = f"https://api.consumet.org/anime/animekai/watch/{episode_id}"
-
-    try:
-        response = requests.get(
-            url,
-            params={
-                "server": "vidstreaming",
-                "dub": dub
-            }
-        )
-
-        data = response.json()
-
-        if data.get("sources"):
-            return data["sources"][0]["url"]
-
-    except:
-        return None
-
-    return None
 def search_anime(query):
 
     graphql_query = """
@@ -141,25 +108,33 @@ def anime_detail(request, mal_id):
     Media(idMal: $malId, type: ANIME) {
         idMal
         format
+        episodes
+        status
+        season
+        seasonYear
+
         title {
         romaji
         english
         }
+
         description
+
         coverImage {
         large
         }
-        episodes
 
         relations {
         edges {
             relationType
             node {
             idMal
-            format
             title {
                 romaji
                 english
+            }
+            coverImage {
+                large
             }
             }
         }
@@ -176,13 +151,23 @@ def anime_detail(request, mal_id):
         }
     )
 
-    anime = response.json()["data"]["Media"]
+    data = response.json()["data"]["Media"]
+
+    if not data:
+        return redirect("home")
+
+    anime = data
 
     # get title
     title = anime["title"]["english"] or anime["title"]["romaji"]
 
     imdb_id = get_imdb_id(title)
+    related = []
 
+    for edge in anime["relations"]["edges"]:
+        node = edge["node"]
+        if node and node.get("idMal") and node["idMal"] != mal_id:
+            related.append(node)
     # 🔹 extract seasons
     seasons = []
 
@@ -195,6 +180,7 @@ def anime_detail(request, mal_id):
     return render(request, "anime.html", {
         "anime": anime,
         "seasons": seasons,
+        "related": related[1:],
         "imdb": imdb_id
     })
 
@@ -231,10 +217,10 @@ def watch(request, mal_id, episode):
     if anime["format"] == "MOVIE":
 
         if imdb:
-            embed_url = f"https://vidsrc-embed.ru/embed/movie?imdb={imdb}&autoplay=1"
+            embed_url = f"https://vidsrcme.ru/embed/movie?imdb={imdb}&autoplay=1"
 
         elif tmdb:
-            embed_url = f"https://vidsrc-embed.ru/embed/movie?tmdb={tmdb}&autoplay=1"
+            embed_url = f"https://vidsrcme.ru/embed/movie?tmdb={tmdb}&autoplay=1"
 
         else:
             embed_url = "about:blank"

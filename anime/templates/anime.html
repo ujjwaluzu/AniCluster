@@ -50,20 +50,34 @@ color:#cbd5f5;
 display:inline-block;
 margin-top:20px;
 padding:12px 24px;
-
 background:linear-gradient(45deg,#ec4899,#db2777);
-
 border-radius:8px;
 color:white;
 text-decoration:none;
 font-weight:600;
-
 transition:0.25s;
 }
 
 .watch-btn:hover{
 transform:translateY(-2px);
 box-shadow:0 6px 20px rgba(236,72,153,0.6);
+}
+
+/* META */
+
+.anime-meta{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+margin-bottom:15px;
+font-size:14px;
+color:#94a3b8;
+}
+
+.anime-meta span{
+background:#020617;
+padding:6px 12px;
+border-radius:6px;
 }
 
 /* SEASONS */
@@ -127,6 +141,13 @@ font-size:26px;
 
 <h1>{{anime.title.english|default:anime.title.romaji}}</h1>
 
+<div class="anime-meta">
+<span>📺 {{anime.episodes}} Episodes</span>
+<span>🎬 {{anime.format}}</span>
+<span>📡 {{anime.status}}</span>
+<span>📅 {{anime.season}} {{anime.seasonYear}}</span>
+</div>
+
 <p>{{anime.description|safe}}</p>
 
 <a class="watch-btn" href="/watch/{{anime.idMal}}/1?imdb={{imdb}}">
@@ -149,10 +170,37 @@ font-size:26px;
 {% for season in seasons %}
 
 <a href="/anime/{{season.idMal}}">
-
 <button class="season-btn">
 {{season.title.english|default:season.title.romaji}}
 </button>
+</a>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endif %}
+
+
+{% if related %}
+
+<div style="margin-top:60px">
+
+<h2 class="section-title">Related Anime</h2>
+
+<div class="grid">
+
+{% for anime in related %}
+{% if anime.idMal %}
+<a style="text-decoration: none;" href="/anime/{{anime.idMal}}">
+{% endif %}
+<div class="card">
+<img src="{{anime.coverImage.large}}">
+</div>
+
+<p style="color: white;">{{ anime.title.english|default:anime.title.romaji }}</p>
 
 </a>
 
