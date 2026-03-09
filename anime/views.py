@@ -75,65 +75,64 @@ def search_anime(query):
 
 def home(request):
 
-    query = request.GET.get("q")
-
-    if query:
-        anime_list = search_anime(query)
-        featured = []
-        popular = []
-        airing = []
-
-    else:
-
-        graphql_query = """
-        query {
-          trending: Page(page:1, perPage:5) {
-            media(sort: TRENDING_DESC, type: ANIME) {
-              idMal
-              title { romaji english }
-              coverImage { large }
-              bannerImage
-            }
-          }
-
-          popular: Page(page:1, perPage:20) {
-            media(sort: POPULARITY_DESC, type: ANIME) {
-              idMal
-              title { romaji english }
-              coverImage { large }
-            }
-          }
-
-          airing: Page(page:1, perPage:12) {
-            media(sort: TRENDING_DESC, status: RELEASING, type: ANIME) {
-              idMal
-              title { romaji english }
-              coverImage { large }
-            }
-          }
+    graphql_query = """
+    query {
+      trending: Page(page:1, perPage:5) {
+        media(sort: TRENDING_DESC, type: ANIME) {
+          idMal
+          title { romaji english }
+          coverImage { large }
+          bannerImage
         }
-        """
+      }
 
-        response = requests.post(
-            ANILIST_API,
-            json={"query": graphql_query}
-        )
+      popular: Page(page:1, perPage:20) {
+        media(sort: POPULARITY_DESC, type: ANIME) {
+          idMal
+          title { romaji english }
+          coverImage { large }
+        }
+      }
 
-        data = response.json()["data"]
+      airing: Page(page:1, perPage:12) {
+        media(sort: TRENDING_DESC, status: RELEASING, type: ANIME) {
+          idMal
+          title { romaji english }
+          coverImage { large }
+        }
+      }
+    }
+    """
 
-        featured = data["trending"]["media"]
-        popular = data["popular"]["media"]
-        airing = data["airing"]["media"]
+    response = requests.post(
+        ANILIST_API,
+        json={"query": graphql_query}
+    )
 
-        anime_list = popular
+    data = response.json()["data"]
+
+    featured = data["trending"]["media"]
+    popular = data["popular"]["media"]
+    airing = data["airing"]["media"]
 
     return render(request, "home.html", {
-        "anime_list": anime_list,
         "featured": featured,
         "popular": popular,
         "airing": airing
     })
+def search(request):
 
+    query = request.GET.get("q")
+
+    anime_list = []
+
+    if query:
+        anime_list = search_anime(query)
+
+    return render(request, "search.html", {
+        "query": query,
+        "results": anime_list
+    })
 
 def anime_detail(request, mal_id):
 

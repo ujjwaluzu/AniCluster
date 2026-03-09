@@ -157,6 +157,14 @@ transition:0.3s;
 opacity:1;
 transform:translate(-50%,-50%) scale(1);
 }
+
+
+p{
+    color: white;
+}
+a{
+    text-decoration: none;
+}
 </style>
 {% if featured %}
 
@@ -211,7 +219,7 @@ transform:translate(-50%,-50%) scale(1);
 <!-- <p>{{ anime.title.english|default:anime.title.romaji }}</p> -->
 
 </div>
-
+<p>{{ anime.title.english|default:anime.title.romaji }}</p>
 </a>
 
 {% endfor %}
@@ -242,6 +250,7 @@ transform:translate(-50%,-50%) scale(1);
 <div class="card">
 <img src="{{ anime.coverImage.large }}">
 </div>
+<p>{{ anime.title.english|default:anime.title.romaji }}</p>
 </a>
 {% endfor %}
 
