@@ -1,7 +1,26 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<style>
+    .server-switch{
+margin-top:15px;
+display:flex;
+gap:10px;
+}
 
+.server-btn{
+padding:10px 18px;
+border:none;
+border-radius:6px;
+background:#020617;
+color:white;
+cursor:pointer;
+}
+
+.server-btn.active{
+background:#ec4899;
+}
+</style>
 <div class="watch-layout">
 
 <!-- VIDEO PLAYER -->
@@ -37,7 +56,7 @@ Movie
 {% for ep in ""|center:total_episodes %}
 {% with forloop.counter as ep_num %}
 
-<a href="{% url 'watch' mal_id ep_num %}?imdb={{imdb}}">
+<a href="{% url 'watch' mal_id ep_num %}?imdb={{imdb}}&server={{server}}&season={{season}}">
 
 <div class="episode-item {% if ep_num == episode %}active{% endif %}">
 {{ep_num}}
@@ -57,20 +76,36 @@ Movie
 </div>
 
 
+<div class="server-switch">
+
+<a href="{% url 'watch' mal_id episode %}?imdb={{imdb}}&server=vidsrc&season={{season}}">
+<button class="server-btn {% if server == 'vidsrc' %}active{% endif %}">
+VidSrc
+</button>
+</a>
+
+<a href="{% url 'watch' mal_id episode %}?imdb={{imdb}}&server=superembed&season={{season}}">
+<button class="server-btn {% if server == 'superembed' %}active{% endif %}">
+SuperEmbed
+</button>
+</a>
+
+</div>
+
+
+
+
 <div class="player-controls">
-
-{% if episode > 1 %}
-<a href="{% url 'watch' mal_id episode|add:-1 %}?imdb={{imdb}}">
-<button class="nav-btn">Previous Episode</button>
-</a>
-{% endif %}
-
-{% if episode < total_episodes %}
-<a href="{% url 'watch' mal_id episode|add:1 %}?imdb={{imdb}}">
-<button class="nav-btn">Next Episode</button>
-</a>
-{% endif %}
-
+    {% if episode > 1 %}
+    <a href="{% url 'watch' mal_id episode|add:-1 %}?imdb={{ imdb }}&tmdb={{ tmdb }}&server={{ server }}&season={{ season }}">
+        <button class="nav-btn">Previous Episode</button>
+    </a>
+    {% endif %}
+    {% if episode < total_episodes %}
+    <a href="{% url 'watch' mal_id episode|add:1 %}?imdb={{ imdb }}&tmdb={{ tmdb }}&server={{ server }}&season={{ season }}">
+        <button class="nav-btn">Next Episode</button>
+    </a>
+    {% endif %}
 </div>
 
 {% endblock %}

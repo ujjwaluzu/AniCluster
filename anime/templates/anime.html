@@ -150,8 +150,8 @@ font-size:26px;
 
 <p>{{anime.description|safe}}</p>
 
-<a class="watch-btn" href="/watch/{{anime.idMal}}/1?imdb={{imdb}}">
-▶ Watch Anime
+<a class="watch-btn" href="/watch/{{ anime.idMal }}/1?imdb={{ imdb }}&tmdb={{ tmdb }}{% if anime.format != 'MOVIE' %}&season={{ current_season }}{% endif %}">
+    ▶ Watch Anime
 </a>
 
 </div>
@@ -168,13 +168,11 @@ font-size:26px;
 <div class="season-list">
 
 {% for season in seasons %}
-
-<a href="/anime/{{season.idMal}}">
-<button class="season-btn">
-{{season.title.english|default:season.title.romaji}}
-</button>
+<a href="/watch/{{ season.idMal }}/1?imdb={{ imdb }}&tmdb={{ tmdb }}&season={{ season.season_number }}">
+    <button class="season-btn">
+        {{ season.title.english|default:season.title.romaji }}
+    </button>
 </a>
-
 {% endfor %}
 
 </div>
